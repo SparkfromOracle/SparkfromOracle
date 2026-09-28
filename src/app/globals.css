@@ -1,0 +1,273 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+:root { --bg:#f5f5f3; --surface:#fff; --ink:#101010; --muted:#6d6d69; --border:#e5e5e0; --border-strong:#d4d4ce; --success:#18794e; --expedia-navy:#17233c; --expedia-blue:#315aa8; --expedia-yellow:#ffcc00; --radius-sm:8px; --radius-md:12px; --radius-lg:18px; }
+body { background:var(--bg); color:var(--ink); font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+button,input,select { font:inherit; } button { cursor:pointer; } button:disabled { cursor:not-allowed; opacity:.55; }
+label { display:grid; gap:7px; color:#3f3f3b; font-size:12px; font-weight:650; letter-spacing:.01em; }
+input,select { width:100%; min-height:46px; padding:11px 13px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); background:#fff; color:var(--ink); outline:none; transition:border-color .16s ease,box-shadow .16s ease; }
+input::placeholder { color:#9a9a94; } input:focus,select:focus { border-color:#111; box-shadow:0 0 0 3px rgba(17,17,17,.08); }
+.shell { min-height:100vh; display:grid; grid-template-columns:232px 1fr; }
+.sidebar { background:#101010; color:#fff; padding:22px 14px; position:sticky; top:0; height:100vh; }
+.brand { font-size:17px; font-weight:750; letter-spacing:-.035em; padding:8px 11px 34px; }
+.brand::after { content:"."; color:#777; }
+.nav { display:grid; gap:3px; } .nav a { color:#a8a8a3; text-decoration:none; padding:10px 11px; border-radius:8px; font-size:13px; font-weight:560; transition:color .16s ease,background .16s ease; }
+.nav a[aria-current="page"] { color:#fff; background:#252525; } .nav a:hover { color:#fff; background:#1c1c1c; }
+.main { min-width:0; } .header { height:68px; display:flex; align-items:center; justify-content:space-between; padding:0 34px; background:rgba(255,255,255,.9); border-bottom:1px solid var(--border); backdrop-filter:blur(14px); position:sticky; top:0; z-index:10; }
+.headerTitle { font-size:13px; font-weight:650; letter-spacing:-.01em; } .status { display:inline-flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); } .statusDot { width:6px; height:6px; border-radius:50%; background:#9b9b95; }
+.content { max-width:1480px; margin:0 auto; padding:38px 34px 56px; }
+.pageIntro { display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:30px; } h1 { margin:0; font-size:30px; line-height:1.15; letter-spacing:-.045em; font-weight:720; }
+.subtitle { margin:8px 0 0; color:var(--muted); font-size:14px; line-height:1.55; max-width:680px; }
+.primary,.secondary { display:inline-flex; align-items:center; justify-content:center; border-radius:var(--radius-sm); padding:11px 16px; font-size:13px; font-weight:650; text-decoration:none; }
+.primary { border:1px solid #111; background:#111; color:#fff; box-shadow:0 1px 1px rgba(0,0,0,.08); } .primary:hover { background:#252525; }
+.secondary { border:1px solid var(--border-strong); background:#fff; color:#151515; } .secondary:hover { border-color:#999; }
+.grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; } .formGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; box-shadow:0 1px 2px rgba(16,16,16,.025); }
+.metricLabel { color:var(--muted); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.055em; } .metricValue { margin-top:8px; font-size:25px; font-weight:720; letter-spacing:-.04em; }
+.panel { margin-top:26px; } .panelHeader { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; } .panelTitle { margin:0; font-size:15px; letter-spacing:-.015em; }
+.empty { padding:52px 24px; text-align:center; color:var(--muted); font-size:13px; } .notice { margin-top:20px; padding:14px 16px; border-radius:var(--radius-sm); background:#eeeee9; color:#51514d; font-size:12px; line-height:1.55; } .notice a { color:inherit; font-weight:700; }
+.eyebrow { color:var(--muted); font-size:10px; font-weight:750; text-transform:uppercase; letter-spacing:.08em; }
+.resultsSection { margin-top:30px; } .resultsHeader { display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:14px; } .resultsHeader h2 { margin:0; font-size:18px; letter-spacing:-.025em; } .resultsHeader p { margin:5px 0 0; color:var(--muted); font-size:12px; } .resultBadge { border:1px solid var(--border); background:#fff; padding:7px 10px; border-radius:999px; color:var(--muted); font-size:11px; font-weight:650; }
+.flightResults,.cartList { display:grid; gap:12px; } .flightCard { padding:18px; } .flightCardTop,.cartItemHeader { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; } .routeLine { display:flex; gap:7px; flex-wrap:wrap; margin-top:8px; font-size:18px; font-weight:720; letter-spacing:-.03em; } .routeLine span:not(:last-child)::after { content:""; }
+.priceBlock { text-align:right; white-space:nowrap; } .priceBlock strong,.cartItemHeader strong { display:block; font-size:18px; letter-spacing:-.025em; } .priceBlock span { color:var(--muted); font-size:10px; }
+.segmentList { display:grid; gap:8px; margin-top:16px; } .segment { display:grid; grid-template-columns:1fr auto 1fr 150px; gap:12px; align-items:center; padding:12px; background:#f8f8f6; border:1px solid #ededE8; border-radius:8px; } .segment div { display:grid; gap:3px; } .segment span { color:var(--muted); font-size:11px; } .segmentArrow { color:#999; display:block !important; } .segmentFlight { color:#555; font-size:11px; text-align:right; }
+.flightCardFooter,.cartFooter { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-top:15px; color:var(--muted); font-size:11px; }
+.cartItem h2 { margin:7px 0 0; font-size:18px; letter-spacing:-.03em; }
+.verificationPage { min-height:100vh; display:grid; place-items:center; padding:28px; background:#f5f5f3; } .verificationCard { width:min(680px,100%); padding:34px; background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:0 18px 50px rgba(16,16,16,.07); }
+.verificationCard h1 { margin-top:10px; } .verificationCard p { color:var(--muted); line-height:1.55; } .verificationBadge { display:inline-flex; padding:6px 9px; border-radius:999px; background:#edf8f1; color:#17633f; font-size:10px; font-weight:750; letter-spacing:.08em; }
+.verificationDetails { display:grid; gap:1px; margin:24px 0; border:1px solid var(--border); border-radius:var(--radius-sm); overflow:hidden; } .verificationDetails div { display:grid; grid-template-columns:180px 1fr; gap:16px; padding:12px 14px; background:#fff; border-bottom:1px solid var(--border); } .verificationDetails div:last-child { border-bottom:0; }
+.verificationDetails dt { color:var(--muted); font-size:11px; } .verificationDetails dd { margin:0; font-size:12px; font-weight:650; overflow-wrap:anywhere; } .verificationNote { font-size:11px; }
+@media (max-width:1024px) { .shell { grid-template-columns:76px 1fr; } .sidebar { padding-inline:9px; } .brand { font-size:0; text-align:center; padding-inline:0; } .brand::before { content:'E'; font-size:18px; } .brand::after { display:none; } .nav a { font-size:0; text-align:center; } .nav a::first-letter { font-size:15px; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .header { padding-inline:24px; } .content { padding-inline:24px; } }
+@media (max-width:767px) { .shell { display:block; } .sidebar { display:none; } .header { height:62px; padding:0 17px; } .content { padding:24px 16px 40px; } .pageIntro { display:block; margin-bottom:22px; } .pageIntro .primary,.pageIntro .secondary { margin-top:18px; width:100%; } .grid,.formGrid { grid-template-columns:1fr; } h1 { font-size:25px; } .flightCardTop,.cartItemHeader,.resultsHeader,.flightCardFooter,.cartFooter { display:block; } .priceBlock { text-align:left; margin-top:12px; } .segment { grid-template-columns:1fr; } .segmentArrow { display:none !important; } .segmentFlight { text-align:left; } .flightCardFooter .secondary { width:100%; margin-top:12px; } .verificationCard { padding:25px; } .verificationDetails div { grid-template-columns:1fr; gap:5px; } }
+
+.publicHome,.publicPage { min-height:100vh; background:#f5f5f3; color:#101010; }
+.publicHeader { min-height:72px; padding:0 5vw; display:flex; align-items:center; justify-content:space-between; gap:24px; border-bottom:1px solid #e2e2dd; background:rgba(255,255,255,.88); backdrop-filter:blur(14px); position:sticky; top:0; z-index:20; }
+.publicBrand { color:#101010; text-decoration:none; font-size:18px; font-weight:780; letter-spacing:-.04em; }
+.publicNav { display:flex; align-items:center; gap:20px; }
+.publicNav a { color:#555550; text-decoration:none; font-size:12px; font-weight:650; }
+.publicNav a:hover { color:#101010; }
+.publicNav .agentAccess { color:#fff; background:var(--expedia-navy); padding:9px 13px; border-radius:7px; }
+.hero { min-height:620px; display:grid; grid-template-columns:minmax(0,1fr) minmax(380px,.9fr); gap:6vw; align-items:center; padding:7vw 7vw 6vw; background:#fff; border-bottom:1px solid #e2e2dd; }
+.heroCopy { max-width:690px; }
+.publicEyebrow { font-size:10px; font-weight:780; letter-spacing:.12em; color:#777770; }
+.hero h1 { margin:14px 0 18px; font-size:clamp(48px,7vw,92px); line-height:.94; letter-spacing:-.065em; font-weight:760; }
+.heroCopy p { max-width:590px; margin:0; color:#62625c; font-size:16px; line-height:1.65; }
+.heroActions { display:flex; gap:10px; margin-top:30px; }
+.publicPrimary,.publicSecondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 17px; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none; border:1px solid #111; }
+.publicPrimary { background:var(--expedia-yellow); color:var(--expedia-navy); border-color:var(--expedia-yellow); }
+.publicSecondary { background:#fff; color:#111; border-color:#cfcfc9; }
+button.publicPrimary:disabled { opacity:.55; }
+.heroMap { min-height:420px; border-radius:24px; background:var(--expedia-navy); position:relative; overflow:hidden; box-shadow:0 22px 60px rgba(0,0,0,.13); }
+.mapGrid { position:absolute; inset:0; opacity:.25; background-image:linear-gradient(rgba(255,255,255,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.2) 1px,transparent 1px); background-size:44px 44px; transform:perspective(500px) rotateX(55deg) scale(1.4); transform-origin:center bottom; }
+.mapOrbit { position:absolute; width:90%; height:46%; border:1px solid rgba(255,255,255,.38); border-radius:50%; left:5%; top:27%; transform:rotate(-18deg); }
+.mapOrbitTwo { transform:rotate(34deg) scaleY(.7); border-color:rgba(255,255,255,.18); }
+.mapOrbit span { position:absolute; width:7px; height:7px; border-radius:50%; background:#fff; right:16%; top:10%; box-shadow:0 0 0 7px rgba(255,255,255,.08); }
+.mapOrbitTwo span { left:22%; top:80%; }
+.mapLabel { position:absolute; color:#fff; font-size:9px; letter-spacing:.12em; font-weight:700; }
+.mapLabelOne { left:24px; top:22px; }
+.mapLabelTwo { right:24px; bottom:22px; color:#999; }
+.publicSection { max-width:1240px; margin:0 auto; padding:90px 6vw; }
+.sectionHeading { display:flex; justify-content:space-between; align-items:end; gap:30px; margin-bottom:28px; }
+.sectionHeading h2,.journeyStrip h2 { margin:10px 0 0; max-width:720px; font-size:34px; line-height:1.08; letter-spacing:-.045em; }
+.sectionHeading a { color:#111; font-size:12px; font-weight:700; text-decoration:none; }
+.discoveryGrid,.journeyCards,.compactGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.discoveryCard { min-height:180px; padding:24px; background:#fff; border:1px solid #dfdfda; border-radius:15px; color:#111; text-decoration:none; display:flex; flex-direction:column; gap:12px; transition:transform .16s ease,border-color .16s ease; }
+.discoveryCard:hover { transform:translateY(-2px); border-color:#999; }
+.discoveryCard span { font-size:9px; letter-spacing:.12em; font-weight:800; color:#777770; }
+.discoveryCard strong { font-size:18px; line-height:1.25; letter-spacing:-.025em; }
+.discoveryCard small { margin-top:auto; color:#777770; font-size:11px; line-height:1.45; }
+.truthNote { margin-top:18px; padding:15px 17px; background:#ecece7; border-radius:9px; color:#5c5c56; font-size:11px; line-height:1.6; }
+.journeyStrip { display:flex; align-items:center; justify-content:space-between; gap:30px; padding:60px 7vw; background:var(--expedia-navy); color:#fff; }
+.journeyStrip p { max-width:700px; color:#aaa; line-height:1.6; font-size:13px; }
+.journeyStrip .publicSecondary { flex:none; }
+.journeyStrip .publicEyebrow { color:#888; }
+.publicFooter { padding:24px 6vw; display:flex; justify-content:space-between; gap:20px; color:#777770; font-size:10px; }
+.publicFooter a { color:#111; font-weight:700; text-decoration:none; }
+.publicPageIntro { padding-top:80px; }
+.publicPageIntro > h1,.assistantPage h1 { margin:13px 0 14px; font-size:clamp(40px,6vw,70px); line-height:.98; letter-spacing:-.06em; }
+.publicPageIntro > p { max-width:720px; color:#64645e; line-height:1.65; font-size:14px; }
+.searchShell { margin-top:30px; padding:12px; background:#fff; border:1px solid #deded8; border-radius:14px; display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:8px; }
+.searchShell div { min-height:64px; padding:12px 13px; background:#f7f7f4; border-radius:8px; display:grid; gap:5px; }
+.searchShell span { font-size:10px; color:#777; }
+.searchShell strong { font-size:13px; }
+.trackForm { margin-top:30px; max-width:720px; display:grid; grid-template-columns:1fr auto; gap:8px; }
+.journeyAction { margin-top:18px; padding:18px; background:#fff; border:1px solid #deded8; border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.journeyAction div { display:grid; gap:5px; }
+.journeyAction strong { font-size:13px; }
+.journeyAction span { color:#777; font-size:11px; }
+.assistantPage { max-width:760px; margin:0 auto; padding:100px 6vw; }
+.assistantBadge { display:inline-flex; gap:8px; align-items:center; color:#555; font-size:10px; font-weight:800; letter-spacing:.1em; }
+.assistantBadge span { width:7px; height:7px; border-radius:50%; background:#111; }
+.assistantPage > p { color:#666; line-height:1.6; font-size:13px; }
+.assistantOptions { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:28px; }
+.assistantOptions button { min-height:52px; text-align:left; padding:0 15px; border:1px solid #ddd; background:#fff; border-radius:9px; font-size:12px; font-weight:700; }
+.assistantOptions button:hover { border-color:#999; }
+.assistantReply { margin-top:12px; padding:18px; border-radius:10px; background:#111; color:#fff; font-size:12px; line-height:1.6; }
+.virtualAgentLauncher { position:fixed; right:22px; bottom:22px; z-index:30; display:inline-flex; align-items:center; gap:8px; padding:11px 14px; border-radius:999px; background:#111; color:#fff; text-decoration:none; font-size:11px; font-weight:700; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+.agentPulse { width:6px; height:6px; border-radius:50%; background:#fff; }
+@media (max-width:800px) {
+  .publicHeader { padding:0 17px; }
+  .publicNav { gap:12px; overflow:auto; }
+  .publicNav a:nth-child(-n+3) { display:none; }
+  .hero { grid-template-columns:1fr; padding:55px 20px; }
+  .heroMap { min-height:300px; }
+  .discoveryGrid,.journeyCards,.compactGrid { grid-template-columns:1fr; }
+  .sectionHeading,.journeyStrip,.journeyAction { display:block; }
+  .sectionHeading a,.journeyStrip .publicSecondary,.journeyAction .publicSecondary { margin-top:18px; }
+  .searchShell,.trackForm { grid-template-columns:1fr; }
+  .publicFooter { display:grid; }
+  .assistantOptions { grid-template-columns:1fr; }
+}
+
+
+.travelerPlanner { background:#f7f7f4; }
+.travelerTop { max-width:1240px; margin:0 auto; padding:70px 6vw 30px; display:flex; justify-content:space-between; gap:30px; align-items:end; }
+.travelerTop h1 { max-width:760px; margin:12px 0 14px; font-size:clamp(40px,6vw,72px); line-height:.98; letter-spacing:-.06em; }
+.travelerTop p { max-width:760px; margin:0; color:#64645e; line-height:1.65; font-size:14px; }
+.travelerAuthActions { display:flex; gap:8px; flex:none; }
+.travelerSignOut { cursor:pointer; }
+.travelerWorkspace { max-width:1240px; margin:0 auto; padding:20px 6vw 80px; }
+.travelerTabs { display:flex; gap:4px; border-bottom:1px solid #dcdcd6; margin-bottom:20px; }
+.travelerTabs button { border:0; background:transparent; padding:12px 14px; color:#777770; font-size:12px; font-weight:750; border-bottom:2px solid transparent; }
+.travelerTabs button.active { color:var(--expedia-navy); border-bottom-color:var(--expedia-yellow); }
+.planningComposer { background:#fff; border:1px solid #deded8; border-radius:16px; padding:24px; }
+.planningComposer h2 { margin:8px 0 18px; font-size:24px; letter-spacing:-.035em; }
+.intentGrid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.intentGrid button { min-height:90px; padding:14px; text-align:left; border:1px solid #e0e0da; background:#fafaf7; border-radius:10px; display:grid; gap:7px; }
+.intentGrid button:hover { border-color:var(--expedia-blue); background:#fff; }
+.intentGrid strong { color:var(--expedia-navy); font-size:13px; }
+.intentGrid small { color:#777770; line-height:1.4; font-size:10px; }
+.freePlanRow { display:grid; grid-template-columns:1fr auto; gap:8px; margin-top:10px; }
+.planningSection { margin-top:42px; }
+.planningSection .sectionHeading { margin-bottom:16px; }
+.plannerStatus { color:#777770; font-size:10px; }
+.planningList { display:grid; gap:8px; }
+.planningItem { display:flex; justify-content:space-between; gap:20px; padding:18px; background:#fff; border:1px solid #deded8; border-radius:12px; }
+.planningItem > div:first-child { min-width:0; }
+.planningItem span { color:#777770; font-size:9px; font-weight:800; letter-spacing:.1em; }
+.planningItem h3 { margin:6px 0 5px; font-size:16px; letter-spacing:-.02em; }
+.planningItem p { margin:0; color:#777770; font-size:11px; line-height:1.5; }
+.planningItemActions { display:flex; align-items:flex-start; gap:8px; white-space:nowrap; }
+.planningItemActions a,.planningItemActions button { border:0; background:transparent; color:var(--expedia-blue); font-size:11px; font-weight:750; text-decoration:none; padding:4px; }
+.planningItemActions button { color:#777770; cursor:pointer; }
+.planningEmpty { padding:40px 22px; text-align:center; background:#fff; border:1px dashed #d4d4ce; border-radius:12px; color:#777770; font-size:12px; line-height:1.6; }
+.groupWorkspace { display:grid; grid-template-columns:280px 1fr; gap:10px; min-height:420px; }
+.groupList,.groupChat { background:#fff; border:1px solid #deded8; border-radius:14px; overflow:hidden; }
+.groupCreate { display:grid; grid-template-columns:1fr auto; gap:6px; padding:10px; border-bottom:1px solid #e6e6e1; }
+.groupCreate input { min-height:40px; }
+.groupCreate .publicPrimary { min-height:40px; padding-inline:12px; }
+.groupRow { width:100%; border:0; border-bottom:1px solid #eee; background:#fff; text-align:left; padding:13px 14px; font-size:12px; font-weight:650; color:#333; }
+.groupRow.active { background:#fff8d9; color:var(--expedia-navy); }
+.groupChat { display:flex; flex-direction:column; }
+.groupChatHeader { padding:16px; border-bottom:1px solid #e6e6e1; display:flex; justify-content:space-between; gap:15px; align-items:center; }
+.groupChatHeader h2 { margin:5px 0 0; font-size:17px; }
+.groupInvite { display:flex; gap:6px; }
+.groupInvite input { min-height:38px; width:150px; }
+.groupInvite button { border:1px solid #d0d0ca; background:#fff; border-radius:7px; padding:0 10px; font-size:11px; font-weight:700; }
+.groupMessages { flex:1; min-height:250px; padding:16px; display:flex; flex-direction:column; gap:8px; background:#fafaf7; }
+.groupMessage { align-self:flex-start; max-width:72%; padding:9px 12px; background:#fff; border:1px solid #e0e0da; border-radius:12px; font-size:12px; line-height:1.45; }
+.groupMessage.own { align-self:flex-end; background:var(--expedia-yellow); border-color:var(--expedia-yellow); color:var(--expedia-navy); }
+.groupComposer { display:grid; grid-template-columns:1fr auto; gap:6px; padding:10px; border-top:1px solid #e6e6e1; }
+.groupComposer input { min-height:40px; }
+.assistantComposer { margin-top:24px; display:grid; grid-template-columns:1fr auto; gap:8px; }
+.assistantSuggestions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; }
+.assistantSuggestions button { min-height:46px; padding:0 12px; text-align:left; border:1px solid #deded8; background:#fff; border-radius:8px; font-size:11px; font-weight:650; }
+.assistantSuggestions button:hover { border-color:var(--expedia-blue); }
+.assistantPlanLink { margin-top:14px; }
+.travelerAuthLinks { display:flex; justify-content:space-between; gap:12px; font-size:11px !important; }
+.travelerAuthLinks a { color:var(--expedia-blue); font-weight:700; text-decoration:none; }
+
+@media (max-width:800px) {
+  .travelerTop { display:block; padding-top:45px; }
+  .travelerAuthActions { margin-top:18px; }
+  .travelerAuthActions a { flex:1; }
+  .intentGrid { grid-template-columns:1fr 1fr; }
+  .groupWorkspace { grid-template-columns:1fr; }
+  .groupChat { min-height:400px; }
+  .groupChatHeader { display:block; }
+  .groupInvite { margin-top:12px; }
+  .groupInvite input { width:100%; flex:1; }
+  .assistantComposer { grid-template-columns:1fr; }
+  .assistantSuggestions { grid-template-columns:1fr; }
+}
+@media (max-width:520px) {
+  .intentGrid { grid-template-columns:1fr; }
+  .freePlanRow { grid-template-columns:1fr; }
+  .planningItem { display:block; }
+  .planningItemActions { margin-top:12px; }
+}
+
+.travelerUsernamePrompt { max-width:1240px; margin:0 auto; padding:16px 6vw; display:flex; justify-content:space-between; gap:20px; align-items:center; background:#fff8d9; border-top:1px solid #eadb8b; border-bottom:1px solid #eadb8b; }
+.travelerUsernamePrompt strong { display:block; margin-top:5px; font-size:13px; color:var(--expedia-navy); }
+.travelerUsernamePrompt p { margin:4px 0 0; color:#6f6a50; font-size:10px; }
+.travelerUsernameForm { display:flex; gap:7px; flex:none; }
+.travelerUsernameForm input { min-height:40px; width:190px; }
+@media (max-width:800px) { .travelerUsernamePrompt { display:block; } .travelerUsernameForm { margin-top:12px; } .travelerUsernameForm input { flex:1; width:auto; } }
+
+.appleAirportMap{position:relative;overflow:hidden;border-radius:24px;background:#eef0f3;box-shadow:0 22px 60px rgba(0,0,0,.13)}
+.appleAirportMapCanvas{position:absolute;inset:0}
+.appleAirportMapStatus{position:absolute;left:14px;bottom:14px;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.92);color:#555;font-size:10px;font-weight:700;box-shadow:0 3px 14px rgba(0,0,0,.12)}
+.assistantHandoff{margin-top:14px;padding:17px;border:1px solid #deded8;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.assistantHandoff div{display:grid;gap:5px}
+.assistantHandoff strong{font-size:12px}
+.assistantHandoff span{max-width:560px;color:#777;font-size:11px;line-height:1.55}
+.assistantHandoff button{flex:none}
+@media(max-width:700px){.assistantHandoff{display:grid}.assistantHandoff button{width:100%}}
+
+.brandMarks{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.brandMarks img{object-fit:contain;max-width:150px;max-height:32px;width:auto;height:auto}
+
+.trackingActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}@media print{.publicHeader,.trackForm,.trackingActions,.publicNav{display:none!important}.publicPage,.publicSection{background:#fff!important;box-shadow:none!important}}
+
+.marketplaceGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}.marketplaceCard{overflow:hidden;border:1px solid var(--border);border-radius:18px;background:#fff}.marketplaceCard>img,.marketplaceImagePlaceholder{width:100%;height:210px;object-fit:cover;background:#ecece8;display:grid;place-items:center;color:#777;font-size:11px}.marketplaceCardBody{padding:16px;display:grid;gap:8px}.marketplaceCardBody h2{margin:0;font-size:19px}.marketplaceCardBody p{margin:0;color:#666;line-height:1.5}.marketplaceActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.marketplaceCardBody small{color:#888}@media(max-width:900px){.marketplaceGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.marketplaceGrid{grid-template-columns:1fr}}
+
+
+/* Traveler app shell: Reddit-inspired navigation without social-network semantics. */
+.travelerApp{min-height:100vh;background:#f7f4ef;color:#171513}
+.travelerAppHeader{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 20px;border-bottom:1px solid rgba(23,21,19,.1);background:rgba(247,244,239,.94);backdrop-filter:blur(16px)}
+.travelerAppBrand{font-weight:800;letter-spacing:-.03em;text-decoration:none;color:inherit;font-size:1.2rem}
+.travelerMenuButton{width:42px;height:42px;border-radius:50%;border:1px solid rgba(23,21,19,.15);background:#171513;color:#fff;font-weight:800}
+.travelerHeaderActions{display:flex;gap:10px;align-items:center}.travelerHeaderActions a{color:inherit;text-decoration:none;font-size:.9rem}
+.travelerAppIntro{max-width:1180px;margin:0 auto;padding:48px 20px 22px;display:flex;justify-content:space-between;gap:32px;align-items:flex-end}.travelerAppIntro h1{max-width:720px;margin:7px 0 8px;font-size:clamp(2rem,5vw,4.2rem);letter-spacing:-.055em;line-height:.98}.travelerAppIntro p{max-width:680px;color:#6d665f;line-height:1.6}
+.travelerQuickNav{display:flex;flex-wrap:wrap;gap:6px;padding:6px;border:1px solid rgba(23,21,19,.12);border-radius:999px;background:#fff}.travelerQuickNav button,.travelerQuickNav a{border:0;background:transparent;padding:9px 13px;border-radius:999px;color:#5d5751;text-decoration:none}.travelerQuickNav .active{background:#171513;color:#fff}
+.travelerWorkspace{max-width:1180px;margin:0 auto;padding:18px 20px 80px}.travelerNotice{max-width:1180px;margin:0 auto 8px}
+.travelerDrawerBackdrop{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.32)}.travelerDrawer{width:min(360px,88vw);height:100%;background:#fff;padding:24px;display:flex;flex-direction:column;box-shadow:18px 0 50px rgba(0,0,0,.18)}.travelerDrawerProfile{display:flex;gap:12px;align-items:center;padding-bottom:24px;border-bottom:1px solid rgba(23,21,19,.1)}.travelerDrawerProfile span{display:block;color:#777;font-size:.82rem;margin-top:3px}.travelerAvatar{width:58px;height:58px;display:grid;place-items:center;border-radius:50%;background:#171513;color:#fff;font-weight:800;font-size:1.3rem}.travelerDrawerNav{display:grid;gap:4px;padding:20px 0}.travelerDrawerNav button,.travelerDrawerNav a,.travelerDrawerFooter button{border:0;background:transparent;text-align:left;padding:12px 10px;border-radius:10px;color:#24211e;text-decoration:none;font:inherit}.travelerDrawerNav button:hover,.travelerDrawerNav a:hover,.travelerDrawerFooter button:hover{background:#f1eee9}.travelerDrawerFooter{margin-top:auto;border-top:1px solid rgba(23,21,19,.1);padding-top:14px;display:grid;gap:2px}.travelerDrawerFooter button:last-child{color:#a21d1d}
+.travelerProfilePage{max-width:1000px;margin:0 auto;padding:44px 20px 80px}.travelerProfileIdentity{display:flex;align-items:center;gap:18px;padding-bottom:32px;border-bottom:1px solid rgba(23,21,19,.1)}.travelerProfileIdentity h1{margin:4px 0;font-size:clamp(2rem,5vw,3.5rem);letter-spacing:-.05em}.travelerProfileIdentity p{margin:0;color:#756f68}.travelerProfileGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px}.travelerProfileCard{background:#fff;border:1px solid rgba(23,21,19,.1);border-radius:18px;padding:22px;box-shadow:0 8px 30px rgba(23,21,19,.04)}.travelerProfileCard h2{margin:6px 0 8px}.travelerProfileCard p{color:#6d665f;line-height:1.55}.travelerPinForm{display:grid;gap:10px}.travelerPinForm input,.travelerPinInput{border:1px solid rgba(23,21,19,.18);background:#fff;border-radius:12px;padding:13px 14px;font-size:1rem}.travelerSettingsList{display:grid;gap:12px}.travelerSettingsList div{display:flex;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid rgba(23,21,19,.08)}.travelerSettingsList span{color:#777}.travelerDangerAction{margin-top:22px;border:0;background:transparent;color:#a21d1d;padding:10px 0}.travelerLockCard{width:min(460px,calc(100% - 40px));margin:12vh auto 0;background:#fff;border:1px solid rgba(23,21,19,.12);border-radius:22px;padding:32px;display:grid;gap:14px;box-shadow:0 18px 60px rgba(23,21,19,.1)}.travelerLockCard h1{margin:0;letter-spacing:-.04em}.travelerLockCard p{color:#6d665f;line-height:1.55}.travelerLockCard .travelerAvatar{margin-bottom:4px}.travelerInbox{background:#fff;border:1px solid rgba(23,21,19,.1);border-radius:18px;padding:24px}.travelerInboxRow{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-top:1px solid rgba(23,21,19,.08);text-decoration:none;color:inherit}.travelerInboxRow span{display:block;color:#777;font-size:.82rem;margin-top:4px}.travelerInboxRow small{color:#777}
+.travelerAppLoading{padding:80px 20px;text-align:center;color:#777}
+@media(max-width:760px){.travelerAppIntro{display:block;padding-top:32px}.travelerQuickNav{margin-top:18px;overflow:auto}.travelerProfileGrid{grid-template-columns:1fr}.travelerHeaderActions a:first-child{display:none}.travelerAppHeader{padding:12px 14px}.travelerWorkspace{padding-left:14px;padding-right:14px}}
+
+.travelerInboxPage h1{margin:6px 0 8px;font-size:clamp(2rem,5vw,3.6rem);letter-spacing:-.05em}.travelerInboxLayout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;margin-top:24px}.travelerConversationList,.travelerConversationPanel{background:#fff;border:1px solid rgba(23,21,19,.1);border-radius:18px;overflow:hidden}.travelerConversationList{padding:8px}.travelerConversationList button{width:100%;border:0;background:transparent;text-align:left;padding:14px;border-radius:12px}.travelerConversationList button.active,.travelerConversationList button:hover{background:#f1eee9}.travelerConversationList span{display:block;color:#777;font-size:.8rem;margin-top:4px}.travelerConversationPanel{min-height:480px;display:flex;flex-direction:column}.travelerConversationHeader{display:flex;justify-content:space-between;gap:16px;padding:20px;border-bottom:1px solid rgba(23,21,19,.08)}.travelerConversationHeader h2{margin:4px 0}.travelerConversationHeader>span{font-size:.82rem;color:#6d665f}.travelerConversationMessages{flex:1;padding:20px;display:grid;align-content:start;gap:10px;overflow:auto}.travelerConversationMessage{max-width:78%;justify-self:start;padding:12px 14px;background:#f1eee9;border-radius:14px 14px 14px 4px;line-height:1.45}.travelerConversationMessage.own{justify-self:end;background:#171513;color:#fff;border-radius:14px 14px 4px 14px}.travelerConversationMessage small{display:block;font-size:.7rem;opacity:.65;margin-top:5px}@media(max-width:760px){.travelerInboxLayout{grid-template-columns:1fr}.travelerConversationList{max-height:230px;overflow:auto}}
+
+.groupResearch{margin:0 18px 12px;padding:16px;border:1px solid rgba(23,21,19,.1);border-radius:14px;background:#faf8f5}.groupResearchForm{display:flex;gap:8px;margin-top:10px}.groupResearchForm input{flex:1}.groupResearchAnswer{margin-top:12px;white-space:pre-wrap;line-height:1.55;color:#3f3933}.groupResearchSources{display:grid;gap:4px;margin-top:10px}.groupResearchSources a{font-size:.78rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#5d5751}
+.assistantSources{margin-top:14px;display:grid;gap:5px}.assistantSources a{font-size:.78rem;color:#5d5751;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Expodia traveler: Reddit-style information architecture + flight-app visual language */
+.travelerSearchHint{display:flex;align-items:center;flex:1;max-width:430px;margin:0 18px;padding:10px 13px;border:1px solid var(--border);border-radius:999px;background:#f7f7f5;color:#8a8a84;font-size:11px}
+.travelerTopicRail{display:flex;gap:6px;overflow:auto;padding:0 max(16px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--border);background:#fff;white-space:nowrap}
+.travelerTopicRail a,.travelerTopicRail button{border:0;background:transparent;color:#666;font-size:11px;font-weight:700;padding:12px 13px;text-decoration:none}
+.travelerTopicRail a:first-child{color:#111;border-bottom:2px solid var(--expedia-blue)}
+.travelerFeedLayout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:14px;align-items:start}
+.travelerFeedMain{min-width:0}
+.travelerFeedCard{padding:22px;background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:12px}
+.travelerFeedMeta{display:flex;align-items:center;gap:7px;color:#85857f;font-size:9px;font-weight:800;letter-spacing:.08em}
+.travelerStatusDot{width:6px;height:6px;border-radius:50%;background:#188553;box-shadow:0 0 0 4px rgba(24,133,83,.09)}
+.travelerFeedCard h2{margin:11px 0 7px;font-size:21px;letter-spacing:-.035em}
+.travelerFeedCard p{margin:0;color:#6c6c66;font-size:12px;line-height:1.55}
+.travelerFeedActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:17px}
+.travelerFeedActions a,.travelerFeedActions button{border:1px solid var(--border-strong);background:#fff;color:#171717;border-radius:7px;padding:9px 12px;font-size:11px;font-weight:750;text-decoration:none}
+.travelerFeedActions a:first-child{background:var(--expedia-navy);color:#fff;border-color:var(--expedia-navy)}
+.travelerFeedRail{display:grid;gap:10px;position:sticky;top:78px}
+.travelerRailCard{display:grid;gap:8px;padding:17px;background:#fff;border:1px solid var(--border);border-radius:10px}
+.travelerRailCard strong{font-size:15px;letter-spacing:-.02em}
+.travelerRailCard>span:not(.publicEyebrow){color:#777;font-size:10px}
+.travelerRailCard a{color:#171717;text-decoration:none;font-size:11px;font-weight:750;padding-top:4px}
+.travelerBottomNav{display:none}
+@media(max-width:820px){
+  .travelerSearchHint{display:none}
+  .travelerTopicRail{padding:0 12px}
+  .travelerFeedLayout{display:block}
+  .travelerFeedRail{display:none}
+  .travelerBottomNav{position:fixed;left:10px;right:10px;bottom:10px;z-index:40;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:6px;background:rgba(255,255,255,.96);border:1px solid #dddcd7;border-radius:14px;box-shadow:0 12px 35px rgba(0,0,0,.12);backdrop-filter:blur(16px)}
+  .travelerBottomNav a,.travelerBottomNav button{display:grid;place-items:center;min-height:38px;border:0;background:transparent;color:#777;text-decoration:none;font-size:10px;font-weight:750;border-radius:9px}
+  .travelerBottomNav .active{background:#f0f0ed;color:#111}
+  .travelerWorkspace{padding-bottom:74px}
+}
+@media(min-width:821px){.travelerBottomNav{display:none!important}}
